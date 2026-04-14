@@ -1,0 +1,6 @@
+name: wseng-skills-google-chat
+version: 1.0.0
+description: WS.Eng Google Chat MCP skill — agent context for workspace messaging.
+author: WS.Eng
+dependencies:
+  apm: []
