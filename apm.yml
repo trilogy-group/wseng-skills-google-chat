@@ -5,3 +5,24 @@ author: WS.Eng
 dependencies:
   apm:
     - trilogy-group/wseng-skills-toolchain#staging
+
+# Read by the `ws` CLI and merged into the top-level apm.yml at install
+# time (see wseng-skills-toolchain manifest.loadAllMcpServers). APM
+# itself ignores this section.
+env:
+  mcpServers:
+    google-chat:
+      transport: proxy
+      install:
+        method: pipx
+        git: https://github.com/ROKT/google-chat-mcp-yash.git
+      command: google-chat-mcp
+      args: [serve]
+      proxy:
+        name: google-chat
+        description: "Google Chat workspace. Search spaces, read messages, send messages."
+      oauth:
+        tokenPath: ~/.config/google-chat-mcp/token.json
+        clientId: ${GOOGLE_CHAT_CLIENT_ID}
+        clientSecret: ${GOOGLE_CHAT_CLIENT_SECRET}
+        setupCommand: "${command} setup --client-id ${clientId} --client-secret ${clientSecret}"
