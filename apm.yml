@@ -10,6 +10,14 @@ dependencies:
 # time (see wseng-skills-toolchain manifest.loadAllMcpServers). APM
 # itself ignores this section.
 env:
+  # Pulled from the `team` store declared by wseng-skills-config; the
+  # toolchain auto-derives env var names (googleChatClientId →
+  # GOOGLE_CHAT_CLIENT_ID, etc.) and exposes them via process.env
+  # before MCP wiring so the `${...}` interpolations below find them.
+  secrets:
+    - team:googleChatClientId
+    - team:googleChatClientSecret
+
   mcpServers:
     google-chat:
       transport: proxy
