@@ -8,65 +8,49 @@ completed-when:
 
 # Set up Google Chat OAuth
 
-The Google Chat MCP server needs an OAuth token to access your workspace.
-This is a one-time interactive setup.
+The Google Chat MCP server needs an OAuth token to access your
+workspace. The OAuth client (id + secret) is shared by the team and
+lives in `wseng-skills/team-secrets` — `ws install` pulls it
+automatically. You only need to do the per-user browser consent step
+once.
 
-## 1. Get the OAuth client credentials
-
-The team's Google Cloud project has an OAuth client configured for the
-Google Chat MCP. **Credentials live in 1Password** (or ask a teammate)
-under "WS.Eng — Google Chat MCP OAuth client". You'll need:
-
-- `GOOGLE_CHAT_CLIENT_ID`
-- `GOOGLE_CHAT_CLIENT_SECRET`
-
-These used to be hard-coded in `apm.yml`, but committing OAuth client
-secrets to git triggered GitHub's secret scanner — they're now read
-from environment variables and only the rotated values live in 1Password.
-
-## 2. Set them as persistent environment variables
-
-### Windows (PowerShell)
-
-```powershell
-[System.Environment]::SetEnvironmentVariable("GOOGLE_CHAT_CLIENT_ID", "...", "User")
-[System.Environment]::SetEnvironmentVariable("GOOGLE_CHAT_CLIENT_SECRET", "...", "User")
-```
-
-Open a new shell so the new variables are picked up.
-
-### macOS / Linux
-
-Add to `~/.zshrc` or `~/.bashrc`:
+## 1. Run `ws install`
 
 ```bash
-export GOOGLE_CHAT_CLIENT_ID="..."
-export GOOGLE_CHAT_CLIENT_SECRET="..."
+saml2aws login --profile trilogy   # if your session has expired
+ws install
 ```
 
-Then `source ~/.zshrc` (or open a new shell).
+`ws install` will:
 
-## 3. Run the OAuth flow
+1. Resolve `team:googleChatClientId` and
+   `team:googleChatClientSecret` from AWS Secrets Manager.
+2. Detect that no OAuth token exists at
+   `~/.config/google-chat-mcp/token.json`.
+3. Run the `google-chat-mcp setup` command, which opens your browser
+   for Google consent and writes the resulting token to the path
+   above.
 
-```bash
-ws bootstrap
-```
-
-This reads the env vars, expands them into the `setupCommand`, opens a
-browser for Google consent, and writes the token to
-`~/.config/google-chat-mcp/token.json`.
-
-If `google-chat-mcp` is not installed yet:
+If `google-chat-mcp` is not installed yet, install it first:
 
 ```bash
 pipx install git+https://github.com/ROKT/google-chat-mcp-yash.git
 ```
 
-## Verification
+## 2. Verify
 
 ```bash
 ws status
 ```
 
-The Google Chat OAuth entry should show `OK` and the token file should
-exist at `~/.config/google-chat-mcp/token.json`.
+The Google Chat OAuth entry should show `OK` and the token file
+should exist at `~/.config/google-chat-mcp/token.json`.
+
+## Troubleshooting
+
+- **`OAuth setup blocked — empty value(s) for: clientId, clientSecret`** —
+  Your AWS session expired before secrets could be fetched. Run
+  `saml2aws login --profile trilogy` and try again.
+- **`invalid_client` after browser consent** — The shared OAuth
+  client may have been rotated. Ask the on-call to refresh it in
+  `wseng-skills/team-secrets`, then re-run `ws install`.
