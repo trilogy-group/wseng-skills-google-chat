@@ -4,6 +4,7 @@ description: WS.Eng Google Chat MCP skill — agent context for workspace messag
 author: WS.Eng
 dependencies:
   apm:
+    - trilogy-group/wseng-skills-cheatsheet#staging
     - trilogy-group/wseng-skills-toolchain#staging
 
 # Read by the `ws` CLI and merged into the top-level apm.yml at install

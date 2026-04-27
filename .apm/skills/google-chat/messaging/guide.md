@@ -40,8 +40,9 @@ The API resolves this to a real @-mention with notification. Plain-text
 
 ## Resolving people and spaces
 
-1. Always check the cheatsheet (`.apm/instructions/gspace-cheatsheet.instructions.md`)
-   first for Space IDs and emails.
+1. Always check the compiled cheatsheet index
+   (`~/.claude/instructions/cheatsheets.instructions.md`) first. If it lists
+   the Google Chat cheatsheet, read that file for Space IDs and emails.
 2. If a space isn't in the cheatsheet, call `gchat_list_spaces` to find it.
 3. Emails follow `firstname.lastname@trilogy.com`. If you're unsure of the
    exact spelling, call `gchat_get_space_members` on a shared space to look

@@ -17,7 +17,10 @@ Read [messaging/guide.md](messaging/guide.md) and follow its instructions.
 
 ## Space and team cheatsheet
 
-The cheatsheet at `.apm/instructions/gspace-cheatsheet.instructions.md`
-contains Space IDs, the team directory, and DM mappings. Use it to resolve
-names to Space IDs when sending messages. Each user populates their DM
-Space IDs on their personal branch during onboarding.
+Use the compiled cheatsheet index at
+`~/.claude/instructions/cheatsheets.instructions.md` to find the Google Chat
+cheatsheet when resolving names, Space IDs, and DM mappings.
+
+If the Google Chat cheatsheet is missing from that index, the user has not
+finished the `populate-gspace-cheatsheet` onboarding task. Surface that task
+before sending workspace messages that require unknown spaces or DMs.
