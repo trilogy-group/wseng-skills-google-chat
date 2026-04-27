@@ -17,7 +17,7 @@ once.
 ## 1. Run `ws install`
 
 ```bash
-saml2aws login --profile trilogy   # if your session has expired
+aws sts get-caller-identity        # verifies AWS_PROFILE=wsdev + credential_process
 ws install
 ```
 
@@ -49,8 +49,9 @@ should exist at `~/.config/google-chat-mcp/token.json`.
 ## Troubleshooting
 
 - **`OAuth setup blocked — empty value(s) for: clientId, clientSecret`** —
-  Your AWS session expired before secrets could be fetched. Run
-  `saml2aws login --profile trilogy` and try again.
+  AWS Secrets Manager could not fetch the shared OAuth client. Verify
+  `AWS_PROFILE=wsdev`, confirm `aws configure get credential_process --profile
+  wsdev` is set, then run `aws sts get-caller-identity` and try again.
 - **`invalid_client` after browser consent** — The shared OAuth
   client may have been rotated. Ask the on-call to refresh it in
   `wseng-skills/team-secrets`, then re-run `ws install`.
