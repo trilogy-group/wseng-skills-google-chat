@@ -8,10 +8,11 @@ completed-when:
 
 # Populate Google Chat Cheatsheet
 
-The cheatsheet at `.apm/instructions/gspace-cheatsheet.instructions.md` gives
-the agent the ability to message Google Chat spaces and @-mention people.
-
-Each user needs to fill in their personal DM Space IDs.
+The cheatsheet at `.apm/instructions/gspace-cheatsheet.instructions.md`
+in the user's `wseng-skills-config` repo gives the agent the ability
+to message Google Chat spaces and @-mention people. Each user needs
+to fill in their personal DM Space IDs there (the file ships from
+`wseng-skills-config` so it lives on the user's personal branch).
 
 ## Steps
 
@@ -21,12 +22,14 @@ Each user needs to fill in their personal DM Space IDs.
 
 2. Match each DM to a person in the team directory table
 
-3. Update the **DM Space ID** column in the cheatsheet on the user's
-   personal branch
+3. Update the **DM Space ID** column in
+   `wseng-skills-config/.apm/instructions/gspace-cheatsheet.instructions.md`
+   on the user's personal branch
 
 4. Ask if there are any product-specific spaces they use and add those too
 
 ## When done
 
-Commit the updated cheatsheet to the user's personal branch. The onboarding
-system checks for populated DM Space IDs to confirm completion.
+Commit the updated cheatsheet to the user's personal branch in
+`wseng-skills-config`. The onboarding system checks for populated DM
+Space IDs (the literal string `DM Space ID |`) to confirm completion.
